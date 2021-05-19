@@ -89,7 +89,8 @@ const auth = {
             const passCorrect = bcrypt.compareSync(password, user.password);
 
             if (!passCorrect) {
-                return res.unauthorized('Email or password not valid')
+                console.log(process.env.SECRET_KEY)
+                return res.unauthorized( process.env.SECRET_KEY)
 
             } else if (passCorrect) {
 
@@ -102,7 +103,6 @@ const auth = {
                 });
             }
         } catch (err) {
-            console.log(process.env.SECRET_KEY)
             res.internalServerError("Error while authenticating");
         }
     }
