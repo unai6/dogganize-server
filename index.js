@@ -1,18 +1,19 @@
 require("dotenv").config();
 
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')();
 const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;
 
 fastify.register(require('fastify-cors'), {
-    origin: [PUBLIC_DOMAIN, "http://www.fontawesome.com"],
+    origin: [PUBLIC_DOMAIN, "http://www.fontawesome.com", 'http://localhost:8080'],
     credentials: true
 })
 fastify.register(require('fastify-formbody'));
 fastify.register(require('fastify-jwt'), {
-    secret: "SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
+    secret: process.env.SECRET_KEY,
 });
+fastify.register(require('fastify-sensible'));
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 const connectToDB = require('./DB/db');
 const routes = require('./routes/index.js');
 

@@ -18,7 +18,7 @@ const todos = {
                 userTodos: updatedUser.userTodos
             })
         } catch (err) {
-            console.log(err)
+            res.internalServerError(err);
         }
 
     },
@@ -29,7 +29,8 @@ const todos = {
             const token = await req.jwtVerify({ maxAge: tokenMaxAge });
 
             if (!token) {
-                console.log('Error, no token provided')
+                res.unauthorized('Error, no token provided');
+                return;
             }
 
             const user = await User.findById(userId).populate('userTodos')
@@ -38,9 +39,7 @@ const todos = {
                 userTodos: user.userTodos,
             })
         } catch (err) {
-            res.status(400).send({
-                error: err,
-            })
+            res.internalServerError(err);
         }
     },
 
@@ -56,9 +55,7 @@ const todos = {
                 todo
             })
         } catch (err) {
-            res.status(400).send({
-                error: err
-            })
+            res.internalServerError(err);
         }
     },
 
@@ -79,10 +76,7 @@ const todos = {
                 user: updatedUser
             })
         } catch (err) {
-            console.log(err)
-            res.status(400).send({
-                error: err
-            })
+            res.internalServerError(err);
         }
     },
 
@@ -104,9 +98,7 @@ const todos = {
 
 
         } catch (err) {
-            res.status(400).send({
-                error: err
-            })
+            res.internalServerError(err);
         }
 
     }

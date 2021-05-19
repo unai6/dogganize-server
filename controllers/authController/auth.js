@@ -19,7 +19,7 @@ const auth = {
 
             if (!user) {
                 const user = await User.create({ userName: name, userEmail: email });
-                const token = await res.jwtSign({ id: user._id }, { expiresIn: '1h' });
+                const token = await res.jwtSign({ id: user._id }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
                 res.status(200).send({
                     user: {
@@ -29,7 +29,7 @@ const auth = {
                     }
                 });
             } else {
-                const token = await res.jwtSign({ id: user._id }, { expiresIn: '1h' });
+                const token = await res.jwtSign({ id: user._id }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
                 res.status(200).send({
                     user: {
@@ -40,7 +40,7 @@ const auth = {
                 });
             }
         } catch (error) {
-            console.log(error)
+            res.internalServerError(error);
         }
     },
     signup: async (req, res) => {
@@ -50,9 +50,7 @@ const auth = {
         try {
 
             if (user) {
-                res.status(401).send({
-                    message: "User already exists in DB"
-                })
+                res.unauthorized('User already exists in db')
             } else {
 
                 const salt = bcrypt.genSaltSync(saltRounds);
@@ -60,7 +58,7 @@ const auth = {
                 const newUser = await User.create({ userEmail, password: hashPass, userName });
                 const emailToken = await UserToken.create({ _userId: newUser._id, token: crypto.randomBytes(16).toString('hex') });
 
-                const token = await res.jwtSign({ id: newUser._id }, { expiresIn: '1h' });
+                const token = await res.jwtSign({ id: newUser._id }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
                 res.status(200).send({
                     user: {
                         userId: newUser.id,
@@ -72,7 +70,7 @@ const auth = {
             }
         } catch (err) {
 
-            console.log('ERROR', err)
+            res.internalServerError(error);
         }
     },
 
@@ -82,15 +80,17 @@ const auth = {
         try {
 
             const user = await User.findOne({ userEmail });
-            const token = await res.jwtSign({ id: user._id }, { expiresIn: '1h' });
+            const token = user && await res.jwtSign({ id: user._id }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
 
-            if (!user) return res.status(404).send({ mssg: 'User not found' });
-
+            if (!user || user === null) {
+                res.notFound('User not found');
+                return;
+            }
             const passCorrect = bcrypt.compareSync(password, user.password);
 
             if (!passCorrect) {
-                return res.status(401).send({ msg: 'Email or password not valid' })
+                return res.unauthorized('Email or password not valid')
 
             } else if (passCorrect) {
 
@@ -103,8 +103,7 @@ const auth = {
                 });
             }
         } catch (err) {
-            console.log(err);
-            res.send({ msg: "Error while authenticating", err });
+            res.internalServerError("Error while authenticating");
         }
     }
 }
