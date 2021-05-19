@@ -102,7 +102,7 @@ const auth = {
                 });
             }
         } catch (err) {
-            res.internalServerError("Error while authenticating");
+            res.internalServerError(process.env.SECRET_KEY);
         }
     }
 }
