@@ -24,7 +24,7 @@ routes.authRoutes.forEach((route, _) => {
 
 const initServer = async () => {
     try {
-        await fastify.listen(process.env.PORT || 4000);
+        await fastify.listen(process.env.PORT);
         console.log(`server Listening on Port ${process.env.PORT}`)
     } catch (error) {
         console.log(error)
