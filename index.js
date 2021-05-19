@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const fastify = require('fastify')();
 
+const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;
 fastify.register(require('fastify-cors'), {
     origin: [PUBLIC_DOMAIN, "http://www.fontawesome.com", 'http://localhost:8080'],
     credentials: true
@@ -15,7 +16,6 @@ fastify.register(require('fastify-sensible'));
 
 const connectToDB = require('./DB/db');
 const PORT = process.env.PORT;
-const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;
 
 const routes = require('./routes/index.js');
 routes.todosRouter.forEach((route) => {
