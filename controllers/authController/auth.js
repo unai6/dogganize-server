@@ -89,8 +89,7 @@ const auth = {
             const passCorrect = bcrypt.compareSync(password, user.password);
 
             if (!passCorrect) {
-                console.log(process.env.SECRET_KEY)
-                return res.unauthorized( process.env.SECRET_KEY)
+                return res.unauthorized(process.env.SECRET_KEY)
 
             } else if (passCorrect) {
 
