@@ -1,7 +1,8 @@
 require("dotenv").config();
 
 const fastify = require('fastify')({ logger: true });
-const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN
+const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;
+
 fastify.register(require('fastify-cors'), {
     origin: [PUBLIC_DOMAIN, "http://www.fontawesome.com"],
     credentials: true
@@ -11,7 +12,7 @@ fastify.register(require('fastify-jwt'), {
     secret: "SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
 });
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT
 const connectToDB = require('./DB/db');
 const routes = require('./routes/index.js');
 
@@ -25,7 +26,7 @@ routes.authRoutes.forEach((route, _) => {
 
 const initServer = async () => {
     try {
-        await fastify.listen(PORT);
+        await fastify.listen(PORT, '0.0.0.0');
         console.log(`server Listening on Port ${PORT}`)
     } catch (error) {
         console.log('Error while connetcting to server', error)
