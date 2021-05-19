@@ -102,6 +102,7 @@ const auth = {
                 });
             }
         } catch (err) {
+            console.log(process.env.SECRET_KEY)
             res.internalServerError("Error while authenticating");
         }
     }
