@@ -10,7 +10,7 @@ fastify.register(require('fastify-jwt'), {
     secret: "SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
 });
 
-const port = process.env.PORT ||4000
+const PORT = process.env.PORT || 4000
 const connectToDB = require('./DB/db');
 const routes = require('./routes/index.js');
 
@@ -24,8 +24,8 @@ routes.authRoutes.forEach((route, _) => {
 
 const initServer = async () => {
     try {
-        await fastify.listen(port);
-        console.log(`server Listening on Port ${port}`)
+        await fastify.listen(PORT);
+        console.log(`server Listening on Port ${PORT}`)
     } catch (error) {
         console.log(error)
     }
