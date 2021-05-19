@@ -4,10 +4,7 @@ const { _secretKey } = require('./config.js');
 const fastify = require('fastify')();
 fastify.register(require('fastify-cors'), {
     origin: ["http://localhost:8080", "http://www.fontawesome.com", "https://dogganize.netlify.app", process.env.PUBLIC_DOMAIN],
-    credentials: true,
-    optionsSuccessStatus: 200,
-    preflight: false,
-    strictPreflight: false
+    credentials: true
 })
 fastify.register(require('fastify-formbody'));
 fastify.register(require('fastify-jwt'), {
