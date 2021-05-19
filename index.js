@@ -3,7 +3,7 @@ const { _secretKey } = require('./config.js');
 
 const fastify = require('fastify')();
 fastify.register(require('fastify-cors'), {
-    origin: true,
+    origin: false,
     credentials: true,
     optionsSuccessStatus: 200
 })
