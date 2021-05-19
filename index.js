@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 const fastify = require('fastify')();
 const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;

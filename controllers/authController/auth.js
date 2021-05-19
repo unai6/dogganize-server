@@ -73,7 +73,6 @@ const auth = {
             res.internalServerError(error);
         }
     },
-
     login: async (req, res) => {
         const { userEmail, password } = req.body;
 
