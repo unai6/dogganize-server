@@ -17,6 +17,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "dotenv": "^9.0.2",
     "fastify": "^3.15.1",
     "fastify-cors": "^6.0.1",
     "fastify-formbody": "^5.0.0",
@@ -31,7 +32,5 @@
     "nodemon": "^2.0.7",
     "path": "^0.12.7"
   },
-  "devDependencies": {
-    "dotenv": "^9.0.2"
-  }
+  "devDependencies": {}
 }

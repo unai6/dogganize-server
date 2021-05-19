@@ -1,3 +1,4 @@
+require("dotenv").config();
 
 const fastify = require('fastify')();
 const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN;
@@ -29,7 +30,7 @@ const initServer = async () => {
         await fastify.listen(PORT, '0.0.0.0');
         console.log(`server Listening on Port ${PORT}`)
     } catch (error) {
-        console.log('Error while connetcting to server', error)
+        console.log('Error while connecting to server', error)
     }
 };
 
