@@ -9,7 +9,7 @@ fastify.register(require('fastify-cors'), {
 })
 fastify.register(require('fastify-formbody'));
 fastify.register(require('fastify-jwt'), {
-    secret: process.env.SECRET_KEY || "SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
+    secret:"SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
 });
 fastify.register(require('fastify-sensible'));
 
