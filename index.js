@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { _secretKey } = require('./config.js');
 
 const fastify = require('fastify')();
 fastify.register(require('fastify-cors'), {
@@ -8,7 +7,7 @@ fastify.register(require('fastify-cors'), {
 })
 fastify.register(require('fastify-formbody'));
 fastify.register(require('fastify-jwt'), {
-    secret: _secretKey,
+    secret: "SECRET_KEY_TEST_TODO_!123asd$$5&&_sadsdad--2",
 });
 
 
