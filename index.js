@@ -1,8 +1,9 @@
 require("dotenv").config();
 
-const fastify = require('fastify')();
+const fastify = require('fastify')({ logger: true });
+const PUBLIC_DOMAIN = "https://dogganize.netlify.app" || process.env.PUBLIC_DOMAIN
 fastify.register(require('fastify-cors'), {
-    origin: ["http://localhost:8080", "http://www.fontawesome.com", "https://dogganize.netlify.app", process.env.PUBLIC_DOMAIN],
+    origin: [PUBLIC_DOMAIN, "http://www.fontawesome.com"],
     credentials: true
 })
 fastify.register(require('fastify-formbody'));
@@ -27,7 +28,7 @@ const initServer = async () => {
         await fastify.listen(PORT);
         console.log(`server Listening on Port ${PORT}`)
     } catch (error) {
-        console.log(error)
+        console.log('Error while connetcting to server', error)
     }
 };
 
