@@ -18,6 +18,7 @@ const todos = {
                 userTodos: updatedUser.userTodos
             })
         } catch (err) {
+            console.log()
             res.internalServerError(err);
         }
 
