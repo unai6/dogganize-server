@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test:coverage:unit": "jest --coverage test/unit/*",
-    "test:coverage:integration": "jest --coverage --detectOpenHandles test/integration/*",
+    "test:coverage:integration:positive": "jest --coverage --detectOpenHandles test/integration/todos.positive.test.js",
+    "test:coverage:integration:negative": "jest --coverage --detectOpenHandles test/integration/todos.negative.test.js",
     "test:unit": "jest test/unit/*",
-    "test:integration": "jest --detectOpenHandles test/integration/*",
+    "test:integration:positive": "jest --detectOpenHandles test/integration/todos.positive.test.js",
+    "test:integration:negative": "jest --detectOpenHandles test/integration/todos.negative.test.js",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -34,6 +36,7 @@
     "jest-html-reporter": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongo-clean": "^2.0.0",
+    "mongodb": "^3.6.7",
     "mongoose": "^5.12.8",
     "morgan": "^1.10.0",
     "node-mocks-http": "^1.10.1",

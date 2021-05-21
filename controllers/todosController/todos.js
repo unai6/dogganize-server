@@ -4,8 +4,12 @@ const tokenMaxAge = process.env.TOKEN_MAX_AGE;
 
 const todos = {
     createTodo: async (req, res) => {
-        await req.jwtVerify({ maxAge: tokenMaxAge });
+        const token = await req.jwtVerify({ maxAge: tokenMaxAge });
 
+        if (!token) {
+            res.unauthorized('Error, no token provided');
+            return;
+        }
         const { userId } = req.params;
         const { name, info } = req.body;
 
@@ -25,9 +29,10 @@ const todos = {
     },
 
     getTodos: async (req, res) => {
+        const token = await req.jwtVerify({ maxAge: tokenMaxAge });
+
         const { userId } = req.params
         try {
-            const token = await req.jwtVerify({ maxAge: tokenMaxAge });
 
             if (!token) {
                 res.unauthorized('Error, no token provided');
@@ -46,10 +51,15 @@ const todos = {
 
     getTodoId: async (req, res) => {
 
+        const token = await req.jwtVerify({ maxAge: tokenMaxAge });
+
         const { todoId } = req.params;
 
         try {
-            await req.jwtVerify({ maxAge: tokenMaxAge });
+            if (!token) {
+                res.unauthorized('Error, no token provided');
+                return;
+            }
             const todo = await Todo.findById(todoId);
 
             res.status(200).send({
@@ -61,14 +71,16 @@ const todos = {
     },
 
     editTodo: async (req, res) => {
+        const token = await req.jwtVerify({ maxAge: tokenMaxAge });
 
         const { todoId, userId } = req.params;
         const { name, info } = req.body;
 
         try {
-
-            await req.jwtVerify({ maxAge: tokenMaxAge });
-
+            if (!token) {
+                res.unauthorized('Error, no token provided');
+                return;
+            }
             const updatedTodo = await Todo.findByIdAndUpdate(todoId, { $set: { name, info } }, { new: true })
             const updatedUser = await User.findByIdAndUpdate(userId, { updatedTodo }, { new: true })
 
@@ -82,12 +94,16 @@ const todos = {
     },
 
     deleteTodo: async (req, res) => {
+        const token = await req.jwtVerify({ maxAge: tokenMaxAge });
 
         const { userId, todoId } = req.params;
 
         try {
 
-            await req.jwtVerify({ maxAge: tokenMaxAge });
+            if (!token) {
+                res.unauthorized('Error, no token provided');
+                return;
+            }
             const todo = await Todo.findById(todoId);
             await Todo.findByIdAndDelete(todo);
             const updatedUser = await User.findByIdAndUpdate(userId, { $pull: { todos: todo } }, { new: true })

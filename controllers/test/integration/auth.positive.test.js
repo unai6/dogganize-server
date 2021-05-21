@@ -1,4 +1,9 @@
 const request = require('supertest');
 const fastify = require('../../../index.js');
 const mongoose = require('mongoose');
-describe('positive scenarios', () => {});
+describe('positive scenarios', () => {
+
+    it('should create user', async () => {
+        
+    })
+});
