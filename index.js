@@ -27,7 +27,6 @@ routes.authRoutes.forEach((route) => {
 
 const server = async () => {
     try {
-        await connectToDB();
         await fastify.listen(PORT, '0.0.0.0');
         console.log(`server Listening on Port ${PORT}`)
     } catch (error) {
@@ -35,6 +34,7 @@ const server = async () => {
     }
 };
 
+connectToDB()
 server();
 
 module.exports = fastify

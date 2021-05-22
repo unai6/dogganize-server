@@ -42,7 +42,7 @@ describe('negative scenarios', () => {
 
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
@@ -68,7 +68,7 @@ describe('negative scenarios', () => {
 
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
@@ -99,7 +99,7 @@ describe('negative scenarios', () => {
             expect(fetchedUser.statusCode).toBe(401);
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     });
 
@@ -122,7 +122,7 @@ describe('negative scenarios', () => {
             expect(todo.statusCode).toBe(500);
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     });
 
@@ -154,7 +154,7 @@ describe('negative scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(401);
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
     it('should return 500 if exception thrown because no created todo at DELETE TODO', async () => {
@@ -176,7 +176,7 @@ describe('negative scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(500);
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
@@ -210,7 +210,7 @@ describe('negative scenarios', () => {
             expect(editedTodo.statusCode).toBe(401);
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
     it('should return 500 if exception thrown because no todo created at EDIT TODO', async () => {
@@ -237,7 +237,7 @@ describe('negative scenarios', () => {
             expect(editedTodo.statusCode).toBe(500);
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 

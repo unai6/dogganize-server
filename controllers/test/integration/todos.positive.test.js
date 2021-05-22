@@ -22,7 +22,7 @@ describe('positive scenarios', () => {
     afterAll(async () => {
         try {
 
-            await mongoose.connection.close()
+            await mongoose.disconnect()
         } catch (err) {
             console.log('error while disconnectin from db', err)
         }
@@ -31,14 +31,13 @@ describe('positive scenarios', () => {
     it('should create a user in DB and a  todo in DB', async () => {
         try {
             const token = await fastify.jwt.sign({ id: '123124125214' }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
-
             const createdUser = await request(fastify.server)
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    "userName": "test1",
-                    "userEmail": "test@testmail.com",
-                    "password": "test"
+                    userName: "test1",
+                    userEmail: "test@testmail.com",
+                    password: "test"
                 })
             if (token) {
 
@@ -56,7 +55,7 @@ describe('positive scenarios', () => {
             }
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
@@ -68,9 +67,9 @@ describe('positive scenarios', () => {
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    "userName": "test2",
-                    "userEmail": "test2@testmail.com",
-                    "password": "test"
+                    userName: "test2",
+                    userEmail: "test2@testmail.com",
+                    password: "test"
                 })
             fastify.jwt.sign({ id: createdUser.body.user.userId }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
@@ -91,7 +90,7 @@ describe('positive scenarios', () => {
             expect(fetchedUser.body).toEqual({ "userTodos": fetchedUser.body.userTodos });
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     });
 
@@ -102,9 +101,9 @@ describe('positive scenarios', () => {
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    "userName": "test3",
-                    "userEmail": "test3@testmail.com",
-                    "password": "test"
+                    userName: "test3",
+                    userEmail: "test3@testmail.com",
+                    password: "test"
                 })
             fastify.jwt.sign({ id: createdUser.body.user.userId }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
@@ -126,7 +125,7 @@ describe('positive scenarios', () => {
             expect(todo.body).toEqual({ "todo": todo.body.todo });
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     });
 
@@ -138,9 +137,9 @@ describe('positive scenarios', () => {
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    "userName": "test4",
-                    "userEmail": "test4@testmail.com",
-                    "password": "test"
+                    userName: "test4",
+                    userEmail: "test4@testmail.com",
+                    password: "test"
                 })
             fastify.jwt.sign({ id: createdUser.body.user.userId }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
@@ -159,7 +158,7 @@ describe('positive scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(200);
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
@@ -170,9 +169,9 @@ describe('positive scenarios', () => {
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    "userName": "test5",
-                    "userEmail": "test5@testmail.com",
-                    "password": "test"
+                    userName: "test5",
+                    userEmail: "test5@testmail.com",
+                    password: "test"
                 })
             fastify.jwt.sign({ id: createdUser.body.user.userId }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
@@ -195,7 +194,7 @@ describe('positive scenarios', () => {
             expect(editedTodo.statusCode).toBe(200);
 
         } catch (err) {
-            console.log(err)
+            expect(err).toHaveProperty('error')
         }
     })
 
