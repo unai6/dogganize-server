@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 describe('negative scenarios', () => {
     beforeEach(async () => {
+     
+
             await mongoose
                 .connect(process.env.MONGODB_URI, {
                     useUnifiedTopology: true,
@@ -12,10 +14,12 @@ describe('negative scenarios', () => {
                     useNewUrlParser: true,
                     useFindAndModify: false
                 })
+      
 
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
+        await mongoose.connection.collections.users.drop()
         await mongoose.disconnect()
     });
 
@@ -42,9 +46,9 @@ describe('negative scenarios', () => {
 
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
-    })
+    });
 
     it('should return 500 if no payload at CREATE TODO', async () => {
 
@@ -68,7 +72,7 @@ describe('negative scenarios', () => {
 
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
 
@@ -99,7 +103,7 @@ describe('negative scenarios', () => {
             expect(fetchedUser.statusCode).toBe(401);
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     });
 
@@ -122,7 +126,7 @@ describe('negative scenarios', () => {
             expect(todo.statusCode).toBe(500);
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     });
 
@@ -154,7 +158,7 @@ describe('negative scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(401);
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
     it('should return 500 if exception thrown because no created todo at DELETE TODO', async () => {
@@ -176,7 +180,7 @@ describe('negative scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(500);
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
 
@@ -210,7 +214,7 @@ describe('negative scenarios', () => {
             expect(editedTodo.statusCode).toBe(401);
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
     it('should return 500 if exception thrown because no todo created at EDIT TODO', async () => {
@@ -237,7 +241,7 @@ describe('negative scenarios', () => {
             expect(editedTodo.statusCode).toBe(500);
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
 

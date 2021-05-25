@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test:coverage:unit": "jest --coverage test/unit/*",
-    "test:coverage:integration:positive": "jest --coverage --detectOpenHandles test/integration/todos.positive.test.js",
-    "test:coverage:integration:negative": "jest --coverage --detectOpenHandles test/integration/todos.negative.test.js",
+    "test:coverage:integration:todos:positive": "jest --coverage --detectOpenHandles test/integration/todos.positive.test.js",
+    "test:coverage:integration:todos:negative": "jest --coverage --detectOpenHandles test/integration/todos.negative.test.js",
     "test:unit": "jest test/unit/*",
-    "test:integration:positive": "jest --detectOpenHandles test/integration/todos.positive.test.js",
-    "test:integration:negative": "jest --detectOpenHandles test/integration/todos.negative.test.js",
+    "test:integration:todos:positive": "jest --detectOpenHandles test/integration/todos.positive.test.js",
+    "test:integration:todos:negative": "jest --detectOpenHandles test/integration/todos.negative.test.js",
+    "test:integration:auth:positive": "jest --detectOpenHandles test/integration/auth.positive.test.js",
+    "test:integration:auth:negative": "jest --detectOpenHandles test/integration/auth.negative.test.js",
+    "test:integration":"jest --detectOpenHandles test/integration/*",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },

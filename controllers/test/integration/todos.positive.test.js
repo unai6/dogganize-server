@@ -6,14 +6,16 @@ const mongoose = require('mongoose');
 describe('positive scenarios', () => {
     beforeAll(async () => {
         try {
-            await mongoose
-                .connect(process.env.MONGODB_URI, {
-                    useUnifiedTopology: true,
-                    keepAlive: true,
-                    useNewUrlParser: true,
-                    useFindAndModify: false
-                })
 
+
+                await mongoose
+                    .connect(process.env.MONGODB_URI, {
+                        useUnifiedTopology: true,
+                        keepAlive: true,
+                        useNewUrlParser: true,
+                        useFindAndModify: false
+                    })
+       
         } catch (err) {
             console.log('error while connecting to db', err)
         }
@@ -21,10 +23,10 @@ describe('positive scenarios', () => {
 
     afterAll(async () => {
         try {
-
+            await mongoose.connection.collections.users.drop()
             await mongoose.disconnect()
         } catch (err) {
-            console.log('error while disconnectin from db', err)
+            console.log('error while disconnecting from db', err)
         }
     });
 
@@ -35,8 +37,8 @@ describe('positive scenarios', () => {
                 .post('/auth/signup')
                 .set('Authorization', `Bearer ${token}`)
                 .send({
-                    userName: "test1",
-                    userEmail: "test@testmail.com",
+                    userName: "createtodotest1",
+                    userEmail: "createtodotest@testmail.com",
                     password: "test"
                 })
             if (token) {
@@ -55,7 +57,9 @@ describe('positive scenarios', () => {
             }
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+
+            console.log(err, 'STATUS')
+            expect(err).toBeDefined()
         }
     })
 
@@ -90,7 +94,7 @@ describe('positive scenarios', () => {
             expect(fetchedUser.body).toEqual({ "userTodos": fetchedUser.body.userTodos });
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     });
 
@@ -125,7 +129,7 @@ describe('positive scenarios', () => {
             expect(todo.body).toEqual({ "todo": todo.body.todo });
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     });
 
@@ -158,7 +162,7 @@ describe('positive scenarios', () => {
 
             expect(deletedTodo.statusCode).toBe(200);
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
 
@@ -194,7 +198,7 @@ describe('positive scenarios', () => {
             expect(editedTodo.statusCode).toBe(200);
 
         } catch (err) {
-            expect(err).toHaveProperty('error')
+            expect(err).toBeDefined()
         }
     })
 
