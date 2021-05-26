@@ -6,9 +6,6 @@ const mongoose = require('mongoose');
 describe('positive scenarios', () => {
 
     beforeEach(async () => {
-        try {
-        
-
                 await mongoose
                     .connect(process.env.MONGODB_URI, {
                         useUnifiedTopology: true,
@@ -17,23 +14,14 @@ describe('positive scenarios', () => {
                         useFindAndModify: false
                     })
           
-        } catch (err) {
-            console.log('error while connecting to db', err)
-        }
     });
 
-    afterEach(async () => {
-        try {
-            await mongoose.connection.collections.users.drop()
-            await mongoose.disconnect()
-        } catch (err) {
-            console.log('error while disconnecting from db', err)
-        }
+    afterAll(async () => {
+            await mongoose.disconnect();
+
     })
 
     it('should signup new user in db', async () => {
-        try {
-
             const token = await fastify.jwt.sign({ id: '123124125214' }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME })
 
             const createdUser = await request(fastify.server)
@@ -46,13 +34,9 @@ describe('positive scenarios', () => {
                 })
 
             expect(createdUser.statusCode).toBe(200);
-        } catch (err) {
-            expect(err).toBeDefined()
-        }
     })
 
     it('should login properly created user', async () => {
-        try {
 
             const token = await fastify.jwt.sign({ id: '123124125214' }, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
             const createdUser = await request(fastify.server)
@@ -66,17 +50,14 @@ describe('positive scenarios', () => {
 
 
             const loggedUser = await request(fastify.server)
-                .post('/auth/login')
-                .set('Authorization', `Bearer ${token}`)
-                .send({
-                    userEmail: createdUser.body.user.userEmail,
-                    password: createdUser.body.user.password
-                })
-            expect(createdUser.password).toEqual(loggedUser.password)
-            expect(loggedUser.statusCode).toEqual(200);
+            .post('/auth/login')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                userEmail: createdUser.body.user.userEmail,
+                password: createdUser.body.user.password
+            })
 
-        } catch (err) {
-            expect(err).toBeDefined()
-        }
+            expect(createdUser.password).toEqual(loggedUser.password)
+
     })
 });

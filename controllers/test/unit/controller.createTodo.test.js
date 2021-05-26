@@ -9,7 +9,7 @@ User.findById = jest.fn();
 User.findByIdAndUpdate = jest.fn();
 Todo.create = jest.fn();
 Todo.findOne = jest.fn();
-let auth = {};
+
 
 describe("controller.createTodo", () => {
     beforeEach(() => {
