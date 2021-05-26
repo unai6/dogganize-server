@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "52cdef7c4bab8bd655296d8c",
+        "userName": "test",
+        "userEmail": "test@test.com",
+        "password": "passwordTest"
+    },
+    {
+        "_id": "52cdef7c4bab8bd654296e8a",
+        "userName": "test2",
+        "userEmail": "tes2@test.com",
+        "password": "passwordTest2"
+    }
+]

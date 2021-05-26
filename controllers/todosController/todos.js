@@ -15,14 +15,13 @@ const todos = {
 
         try {
             const newTodo = await Todo.create({ name, info })
-            const user = await User.findById(userId);
-            const updatedUser = await User.findByIdAndUpdate(user, { $push: { userTodos: newTodo._id } }, { new: true })
+            const updatedUser = await User.findByIdAndUpdate(userId, { $push: { userTodos: newTodo._id } }, { new: true })
 
             res.status(200).send({
                 userTodos: updatedUser.userTodos
             })
         } catch (err) {
-            console.log()
+            console.log(err)
             res.internalServerError(err);
         }
 
@@ -82,11 +81,10 @@ const todos = {
                 return;
             }
             const updatedTodo = await Todo.findByIdAndUpdate(todoId, { $set: { name, info } }, { new: true })
-            const updatedUser = await User.findByIdAndUpdate(userId, { updatedTodo }, { new: true })
+            await User.findByIdAndUpdate(userId, { updatedTodo }, { new: true })
 
             res.status(200).send({
                 todo: updatedTodo,
-                user: updatedUser
             })
         } catch (err) {
             res.internalServerError(err);
@@ -105,12 +103,11 @@ const todos = {
                 return;
             }
             const todo = await Todo.findById(todoId);
-            await Todo.findByIdAndDelete(todo);
-            const updatedUser = await User.findByIdAndUpdate(userId, { $pull: { todos: todo } }, { new: true })
+            await Todo.findByIdAndDelete(todoId);
+            await User.findByIdAndUpdate(userId, { $pull: { todos: todo } }, { new: true })
 
             res.status(200).send({
-                message: 'Todo deleted successfully',
-                updatedUser
+                message: 'Todo deleted successfully'
             });
 
 
